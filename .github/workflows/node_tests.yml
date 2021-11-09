@@ -1,0 +1,59 @@
+name: Node tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+  
+
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+        bids-examples-branch: [master]
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v2
+        submodules: recursive
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: install git if running locally
+        if: ${{ env.ACT }}
+        run: |
+          apt-get update -y
+          apt-get install git -y
+
+      - name: Get bids-examples data
+        run: git clone --depth 1 https://github.com/bids-standard/bids-examples -b ${{ matrix.bids-examples-branch }}
+
+      - name: Try what the error code suggested
+        run: git submodule update --init --depth 1
+
+      - run: npm install
+      
+      - run: npm test
+      
+      #- name: Install git-annex ubuntu
+      #  if: matrix.platform == 'ubuntu-latest'
+      #  shell: bash -l {0}
+      #  run: conda install -c conda-forge git-annex
+
+      #- name: Install git-annex macos
+      #  if: matrix.platform == 'macos-latest'
+      #  shell: bash -l {0}
+      #  run: brew install git-annex
+
+      #- name: Install git-annex windows
+      #  if: matrix.platform == 'windows-latest'
+      #  uses: crazy-max/ghaction-chocolatey@v1
+      #  with:
+      #    args: install git-annex --yes --ignore-checksums
