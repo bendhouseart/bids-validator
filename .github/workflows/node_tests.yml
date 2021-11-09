@@ -2,11 +2,11 @@ name: Node tests
 
 on:
   push:
-    branches: [master]
+    branches: [master, all-eggs-in-actions]
   pull_request:
-    branches: [master]
+    branches: [master, all-eggs-in-actions]
   workflow_dispatch:
-  
+
 
 
 jobs:
