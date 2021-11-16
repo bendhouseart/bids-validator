@@ -26,7 +26,8 @@ jobs:
           apt install nodejs  
       
       - uses: actions/checkout@v2
-        submodules: recursive
+        with:
+          submodules: recursive
         
       - name: install git if running locally
         if: ${{ env.ACT }}
