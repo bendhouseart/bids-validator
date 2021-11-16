@@ -22,8 +22,8 @@ jobs:
       - name: Install Node
         run: |
           wget https://deb.nodesource.com/setup_${{ matrix.node-version }}.x -O nodesource_setup.sh
-          bash nodesource_setup.sh
-          apt install nodejs  
+          sudo bash nodesource_setup.sh
+          sudo apt install nodejs  
       
       - uses: actions/checkout@v2
         with:
