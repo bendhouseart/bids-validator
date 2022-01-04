@@ -8,7 +8,7 @@ const fs = require('fs')
  * @returns {boolean}
  */
 const checkTestData = path => {
-  const submoduleDirExists = fs.existsSync(path) && fs.readdirSync(path).length
+  const submoduleDirExists = fs.opendirSync(path) && fs.readdirSync(path).length
   return submoduleDirExists
 }
 

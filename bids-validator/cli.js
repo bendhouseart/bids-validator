@@ -53,7 +53,7 @@ export function cli(argumentOverride) {
       return filenamesOnly()
     }
 
-    if (fs.existsSync(dir)) {
+    if (fs.opendirSync(dir)) {
       validate.BIDS(dir, options, function (issues, summary) {
         function resolveOrReject() {
           if (
